@@ -19,19 +19,21 @@ struct ContentView: View {
         }
     }
     
+    private func deleteBudgetCategory(budgetCategory: BudgetCategory){
+        viewContext.delete(budgetCategory)
+        do {
+            try viewContext.save() // need "Save()" after "Delete()"
+        } catch {
+            print(error)
+        }
+    }
+    
     var body: some View {
         NavigationStack{
             VStack {
                 Text(total as NSNumber, formatter: NumberFormatter.currency)
                     .fontWeight(.bold)
-                BudgetListView(budgetCategoryResults: self.budgetCategoryResults) { budgetCategory in
-                    viewContext.delete(budgetCategory)
-                    do {
-                        try viewContext.save() // need "Save()" after "Delete()"
-                    } catch {
-                        print(error)
-                    }
-                }
+                BudgetListView(budgetCategoryResults: self.budgetCategoryResults, onDeleteBudgetCategory: deleteBudgetCategory)
             }
             .sheet(isPresented: $isPresented, content: {
                 AddBudgetCategoryView()
