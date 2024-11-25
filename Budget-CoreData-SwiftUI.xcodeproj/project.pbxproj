@@ -16,6 +16,7 @@
 		D24D83652CF44B7800E5BF8E /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24D83642CF44B7800E5BF8E /* CoreDataManager.swift */; };
 		D24D83682CF44D2C00E5BF8E /* AddBudgetCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24D83672CF44D2C00E5BF8E /* AddBudgetCategoryView.swift */; };
 		D24D836B2CF44EF100E5BF8E /* NumberFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24D836A2CF44EF100E5BF8E /* NumberFormatter+Extensions.swift */; };
+		D24D836D2CF4550F00E5BF8E /* BudgetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24D836C2CF4550F00E5BF8E /* BudgetListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		D24D83642CF44B7800E5BF8E /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D24D83672CF44D2C00E5BF8E /* AddBudgetCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBudgetCategoryView.swift; sourceTree = "<group>"; };
 		D24D836A2CF44EF100E5BF8E /* NumberFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Extensions.swift"; sourceTree = "<group>"; };
+		D24D836C2CF4550F00E5BF8E /* BudgetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				D24D83672CF44D2C00E5BF8E /* AddBudgetCategoryView.swift */,
+				D24D836C2CF4550F00E5BF8E /* BudgetListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -185,6 +188,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D24D83512CF4452700E5BF8E /* ContentView.swift in Sources */,
+				D24D836D2CF4550F00E5BF8E /* BudgetListView.swift in Sources */,
 				D24D834F2CF4452700E5BF8E /* Budget_CoreData_SwiftUIApp.swift in Sources */,
 				D24D836B2CF44EF100E5BF8E /* NumberFormatter+Extensions.swift in Sources */,
 				D24D83622CF4492300E5BF8E /* BudgetCategory+CoreDataClass.swift in Sources */,
