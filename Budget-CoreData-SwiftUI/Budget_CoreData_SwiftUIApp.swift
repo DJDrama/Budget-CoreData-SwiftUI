@@ -12,6 +12,7 @@ struct Budget_CoreData_SwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(\.managedObjectContext, CoreDataManager.shared.viewContext)
         }
     }
 }
