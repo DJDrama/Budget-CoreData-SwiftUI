@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BudgetListView: View {
     let budgetCategoryResults: FetchedResults<BudgetCategory>
+    let onDeleteBudgetCategory: (BudgetCategory) -> Void
     
     var body: some View {
         List {
@@ -23,7 +24,13 @@ struct BudgetListView: View {
                             Text(budgetCategory.total as NSNumber, formatter: NumberFormatter.currency)
                         }
                     }
-                }
+                }.onDelete(perform: { indexSet in
+                    indexSet.map { index in
+                        budgetCategoryResults[index]
+                    }.forEach { budgetCategory in
+                        onDeleteBudgetCategory(budgetCategory)
+                    }
+                })
             }
         }
     }
