@@ -27,10 +27,13 @@ struct BudgetDetailView: View {
             transaction.title = title
             transaction.total = Double(total)!
             
-
+            
             budgetCategory.addToTransactions(transaction)
             
             try viewContext.save()
+            
+            title = ""
+            total = ""
         }catch {
             print(error)
         }
@@ -66,15 +69,18 @@ struct BudgetDetailView: View {
                     }.disabled(!isFormValid)
                     Spacer()
                 }
+            }.frame(maxHeight: .infinity)
+                .padding([.bottom], 20)
+            
+            VStack {
+                // Summary
+                BudgetSummaryView(budgetCategory: self.budgetCategory)
+                // Transaction
+                TransactionListView(request: BudgetCategory.transactionsByCategoryRequest(budgetCategory)) { transaction in
+                    deleteTransaction(transaction: transaction)
+                }
             }
             
-            // Summary
-            BudgetSummaryView(budgetCategory: self.budgetCategory)
-            
-            // Transaction
-            TransactionListView(request: BudgetCategory.transactionsByCategoryRequest(budgetCategory)) { transaction in
-                deleteTransaction(transaction: transaction)
-            }
             Spacer()
         }
     }
