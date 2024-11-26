@@ -11,8 +11,12 @@ import CoreData
 struct TransactionListView: View {
     @FetchRequest var transactions: FetchedResults<Transaction>
     
-    init(request: NSFetchRequest<Transaction>) {
+    let onDeleteTransaction: (Transaction) -> Void
+    
+    // @escaping : out leave this function
+    init(request: NSFetchRequest<Transaction>, onDeleteTransaction: @escaping (Transaction) -> Void) {
         _transactions = FetchRequest(fetchRequest: request)
+        self.onDeleteTransaction = onDeleteTransaction
     }
     
     var body: some View {
@@ -27,8 +31,14 @@ struct TransactionListView: View {
                         Spacer()
                         Text(transaction.total as NSNumber, formatter: NumberFormatter.currency)
                     }
-                }
+                }.onDelete(perform: deleteTransaction)
             }
         }
+    }
+    private func deleteTransaction(_ indexSet: IndexSet){
+        indexSet.map { transactions[$0] }
+            .forEach { transaction in
+                    onDeleteTransaction(transaction)
+            }
     }
 }
