@@ -17,14 +17,21 @@ struct BudgetListView: View {
                 Text("No budget category exists!")
             } else {
                 ForEach(budgetCategoryResults) { budgetCategory in
-                    HStack {
-                        Text(budgetCategory.title ?? "")
-                        Spacer()
-                        VStack {
-                            Text(budgetCategory.total as NSNumber, formatter: NumberFormatter.currency)
+                    NavigationLink(value: budgetCategory){
+                        HStack {
+                            Text(budgetCategory.title ?? "")
+                            Spacer()
+                            VStack(alignment:.trailing, spacing: 10) {
+                                Text(budgetCategory.total as NSNumber, formatter: NumberFormatter.currency)
+                                Text("\(budgetCategory.overSpent ? "Overspent":"Remaining") \(Text(budgetCategory.remainingBudgetTotal as NSNumber, formatter: NumberFormatter.currency))")
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(budgetCategory.overSpent ? .red: .green)
+                            }
                         }
                     }
-                }.onDelete(perform: { indexSet in
+                }
+                .onDelete(perform: { indexSet in
                     indexSet.map { index in
                         budgetCategoryResults[index]
                     }.forEach { budgetCategory in
@@ -32,6 +39,10 @@ struct BudgetListView: View {
                     }
                 })
             }
+        }
+        .listStyle(.plain)
+        .navigationDestination(for: BudgetCategory.self) { budgetCategory in
+            BudgetDetailView(budgetCategory: budgetCategory)
         }
     }
 }
