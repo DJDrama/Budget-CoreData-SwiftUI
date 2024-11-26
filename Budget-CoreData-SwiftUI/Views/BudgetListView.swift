@@ -10,6 +10,7 @@ import SwiftUI
 struct BudgetListView: View {
     let budgetCategoryResults: FetchedResults<BudgetCategory>
     let onDeleteBudgetCategory: (BudgetCategory) -> Void
+    let onEditBudgetCategory: (BudgetCategory) -> Void
     
     var body: some View {
         List {
@@ -28,7 +29,10 @@ struct BudgetListView: View {
                                     .fontWeight(.bold)
                                     .foregroundColor(budgetCategory.overSpent ? .red: .green)
                             }
-                        }
+                        }.contentShape(Rectangle()) // to enable whole layer for long press gesture
+                            .onLongPressGesture {
+                                onEditBudgetCategory(budgetCategory)
+                            }
                     }
                 }
                 .onDelete(perform: { indexSet in

@@ -8,12 +8,17 @@
 import SwiftUI
 
 struct AddBudgetCategoryView: View {
+    private var budgetCategoryForEdit: BudgetCategory?
     
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     @State private var title: String = ""
     @State private var total: Double = 0.0
     @State private var messages: [String] = []
+    
+    init(budgetCategoryForEdit: BudgetCategory? = nil){
+        self.budgetCategoryForEdit = budgetCategoryForEdit
+    }
     
     var isFormValid: Bool {
         
@@ -28,17 +33,27 @@ struct AddBudgetCategoryView: View {
         return messages.isEmpty
     }
     
-    private func save(){
-        let budgetCategory = BudgetCategory(context: viewContext)
-        budgetCategory.title = title
-        budgetCategory.total = total
+    private func saveOrUpdate() {
+        if let budgetCategoryForEdit {
+            // get the budget that you need to update.
+            let budget = BudgetCategory.byId(budgetCategoryForEdit.objectID)
+            
+            // update the existing budget category
+            budget.title = title
+            budget.total = total      
+        }
+        else {
+            // save a new budget category
+            let budgetCategory = BudgetCategory(context: viewContext)
+            budgetCategory.title = title
+            budgetCategory.total = total
+        }
         
-        // save the context
-        do{
+        do {
             try viewContext.save()
             dismiss()
-        } catch {
-            print(error.localizedDescription)
+        }catch {
+            print(error)
         }
     }
     
@@ -68,13 +83,20 @@ struct AddBudgetCategoryView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
                         if isFormValid {
-                            save()
+                            saveOrUpdate()
                         } else {
                             
                         }
                     }
                 }
             })
+        }
+        .onAppear {
+            if let budgetCategoryForEdit {
+                title = budgetCategoryForEdit.title ?? ""
+                total = budgetCategoryForEdit.total
+                
+            }
         }
     }
 }
